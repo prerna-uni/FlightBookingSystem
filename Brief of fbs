@@ -1,0 +1,34 @@
+Modules Breakdown
+1. Authentication Service
+REST endpoints:
+/auth/register – Register new users
+/auth/login – Authenticate and issue JWT
+
+Roles: USER, ADMIN
+Uses: Spring Security + JWT
+
+2. Search Service
+REST endpoint: /flights/search
+Stores and fetches flight details
+Admin can add/update/delete flights
+
+3. Fare Service
+REST endpoint: /fares/{flightId}
+Handles CRUD operations for flight fares
+
+4. Booking Service
+REST endpoints:
+/booking/book – Create booking
+/booking/{id} – Fetch booking by ID
+Interacts with Fare service & sends message to Search service
+
+5. Check-in Service
+REST endpoint: /checkin/{bookingId}
+Performs check-in and updates booking via RabbitMQ
+
+6. Gateway Service
+Routes:
+/api/search/** → search-service
+/api/booking/** → booking-service
+etc.
+Configured with JWT filter for security
